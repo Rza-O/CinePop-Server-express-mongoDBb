@@ -1,4 +1,4 @@
-const dotenv = require('dotenv');
+require('dotenv').config();
 const cors = require('cors');
 const express = require('express');
 const { MongoClient, ServerApiVersion } = require('mongodb');
@@ -20,17 +20,34 @@ const client = new MongoClient(uri, {
     }
 });
 
+
+
+
+
+
 async function run() {
     try{
-        console.log('Mongo DB is in business');
+
+        const moviesCollection = client.db('moviesDB').collection('movies')
+
+        // Movie related API
+
+        app.post('/movies', async(req, res) => {
+            const data = req.body;
+            const result = await moviesCollection.insertOne(data);
+            res.send(result);
+        })
+
+
+
+
+        console.log("Pinged your deployment. You successfully connected to MongoDB!");
     }
     finally{
         // await client.close();
     }
 }
 run()
-
-
 
 
 
