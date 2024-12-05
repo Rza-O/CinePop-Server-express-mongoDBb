@@ -37,13 +37,21 @@ async function run() {
             const { sortBy } = req.query;
             let result;
             if(sortBy === 'rating'){
-                result = await moviesCollection.find().sort({rating: -1}).toArray()
+                result = await moviesCollection.find().sort({rating: -1}).limit(6).toArray();
             }
             else{
                 result = await moviesCollection.find().toArray();
             }
             
             res.send(result);
+        })
+
+        // 
+
+        // top picks movie Post api
+        app.get('/topPicks', async (req,res) => {
+            const result = await moviesCollection.find().toArray();
+            res.send(result)
         })
 
         // Movie POST API
