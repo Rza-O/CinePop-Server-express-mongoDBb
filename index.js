@@ -26,7 +26,7 @@ const client = new MongoClient(uri, {
 
 
 async function run() {
-    try{
+    try {
 
         const moviesCollection = client.db('moviesDB').collection('movies')
 
@@ -34,13 +34,22 @@ async function run() {
 
         // Movie Get API
         app.get('/movies', async (req, res) => {
-            const result = await moviesCollection.find().toArray();
+            const { sortBy } = req.query;
+            let result;
+            if(sortBy === 'rating'){
+                result = await moviesCollection.find().sort({rating: -1}).toArray()
+            }
+            else{
+                result = await moviesCollection.find().toArray();
+            }
+            
             res.send(result);
         })
 
         // Movie POST API
-        app.post('/movies', async(req, res) => {
+        app.post('/movies', async (req, res) => {
             const data = req.body;
+            console.log(data);
             const result = await moviesCollection.insertOne(data);
             res.send(result);
         })
@@ -50,7 +59,7 @@ async function run() {
 
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
     }
-    finally{
+    finally {
         // await client.close();
     }
 }
@@ -66,7 +75,7 @@ run()
 
 
 
-app.get('/', (req,res) => {
+app.get('/', (req, res) => {
     res.send('Movie Server Started')
 })
 
