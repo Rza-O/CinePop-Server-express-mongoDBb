@@ -32,6 +32,13 @@ async function run() {
 
         // Movie related API
 
+        // Movie Get API
+        app.get('/movies', async (req, res) => {
+            const result = await moviesCollection.find().toArray();
+            res.send(result);
+        })
+
+        // Movie POST API
         app.post('/movies', async(req, res) => {
             const data = req.body;
             const result = await moviesCollection.insertOne(data);
