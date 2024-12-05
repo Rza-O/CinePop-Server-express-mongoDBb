@@ -29,6 +29,7 @@ async function run() {
     try {
 
         const moviesCollection = client.db('moviesDB').collection('movies')
+        const topPicksCollection = client.db('moviesDB').collection('topPicks')
 
         // Movie related API
 
@@ -46,11 +47,16 @@ async function run() {
             res.send(result);
         })
 
-        // 
+        // Top picks Post get api
+        app.post('/topPicks', async (req,res) => {
+            const data = req.body;
+            const result = await topPicksCollection.insertMany(data);
+            res.send(result)
+        })
 
-        // top picks movie Post api
+        // top picks movie get Post api
         app.get('/topPicks', async (req,res) => {
-            const result = await moviesCollection.find().toArray();
+            const result = await topPicksCollection.find().toArray();
             res.send(result)
         })
 
