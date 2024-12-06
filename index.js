@@ -28,8 +28,9 @@ const client = new MongoClient(uri, {
 async function run() {
     try {
 
-        const moviesCollection = client.db('moviesDB').collection('movies')
-        const topPicksCollection = client.db('moviesDB').collection('topPicks')
+        const moviesCollection = client.db('moviesDB').collection('movies');
+        const favoritesCollection = client.db('moviesDB').collection('favorites');
+        const topPicksCollection = client.db('moviesDB').collection('topPicks');
 
         // Movie related API
 
@@ -71,12 +72,19 @@ async function run() {
         // single Movie GET API
         app.get('/movies/:id', async (req, res) => {
             const id = req.params.id;
+            console.log(id);
             const query = { _id: new ObjectId(id) };
             const result = await moviesCollection.findOne(query)
             console.log(result);
             res.send(result)
         })
 
+        // This is the POST API for favorites
+        app.post('/favorites', async (req, res) => {
+            const data = req.body;
+            const result = await favoritesCollection.insertOne(data);
+            res.send(result);
+        })
 
 
 
