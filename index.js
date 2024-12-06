@@ -1,7 +1,7 @@
 require('dotenv').config();
 const cors = require('cors');
 const express = require('express');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const port = process.env.PORT || 5000
 const app = express();
 
@@ -37,25 +37,25 @@ async function run() {
         app.get('/movies', async (req, res) => {
             const { sortBy } = req.query;
             let result;
-            if(sortBy === 'rating'){
-                result = await moviesCollection.find().sort({rating: -1}).limit(6).toArray();
+            if (sortBy === 'rating') {
+                result = await moviesCollection.find().sort({ rating: -1 }).limit(6).toArray();
             }
-            else{
+            else {
                 result = await moviesCollection.find().toArray();
             }
-            
+
             res.send(result);
         })
 
         // Top picks Post get api
-        app.post('/topPicks', async (req,res) => {
+        app.post('/topPicks', async (req, res) => {
             const data = req.body;
             const result = await topPicksCollection.insertMany(data);
             res.send(result)
         })
 
         // top picks movie get Post api
-        app.get('/topPicks', async (req,res) => {
+        app.get('/topPicks', async (req, res) => {
             const result = await topPicksCollection.find().toArray();
             res.send(result)
         })
@@ -66,6 +66,15 @@ async function run() {
             console.log(data);
             const result = await moviesCollection.insertOne(data);
             res.send(result);
+        })
+
+        // single Movie GET API
+        app.get('/movies/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) };
+            const result = await moviesCollection.findOne(query)
+            console.log(result);
+            res.send(result)
         })
 
 
