@@ -86,6 +86,12 @@ async function run() {
             res.send(result);
         })
 
+        // This is the get api for the favorites
+        app.get('/favorites', async (req, res) => {
+            const result = await favoritesCollection.find().toArray();
+            res.send(result)
+        })
+
 
 
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
