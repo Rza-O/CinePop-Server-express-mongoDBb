@@ -88,7 +88,9 @@ async function run() {
 
         // This is the get api for the favorites
         app.get('/favorites', async (req, res) => {
-            const result = await favoritesCollection.find().toArray();
+            const { favOf } = req.query;
+            const query = { email:  favOf  };
+            const result = await favoritesCollection.find(query).toArray();
             res.send(result)
         })
 
