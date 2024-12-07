@@ -36,14 +36,16 @@ async function run() {
 
         // Movie Get API
         app.get('/movies', async (req, res) => {
-            const { sortBy } = req.query;
+            const { sortBy, search } = req.query;
             let result;
+            let option = {};
             if (sortBy === 'rating') {
                 result = await moviesCollection.find().sort({ rating: -1 }).limit(6).toArray();
             }
-            else {
-                result = await moviesCollection.find().toArray();
+            if (search) {
+                option = {title: {$regex : search, $options: "i"}}
             }
+            result = await moviesCollection.find(option).toArray();
 
             res.send(result);
         })
@@ -89,7 +91,7 @@ async function run() {
         // This is the get api for the favorites
         app.get('/favorites', async (req, res) => {
             const { favOf } = req.query;
-            const query = { email:  favOf  };
+            const query = { email: favOf };
             const result = await favoritesCollection.find(query).toArray();
             res.send(result)
         })
@@ -97,7 +99,7 @@ async function run() {
         // Deleting favorites movie API
         app.delete('/favorites/:id', async (req, res) => {
             const id = req.params.id;
-            const query = {_id: new ObjectId(id)};
+            const query = { _id: new ObjectId(id) };
             const result = await favoritesCollection.deleteOne(query);
             res.send(result);
         })
