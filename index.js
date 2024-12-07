@@ -42,13 +42,18 @@ async function run() {
             if (sortBy === 'rating') {
                 result = await moviesCollection.find().sort({ rating: -1 }).limit(6).toArray();
             }
-            if (search) {
+            else if (search) {
                 option = {title: {$regex : search, $options: "i"}}
+                result = await moviesCollection.find(option).toArray();
             }
-            result = await moviesCollection.find(option).toArray();
+            else {
+                result = await moviesCollection.find().toArray();
+            }
 
             res.send(result);
         })
+
+
 
         // Top picks Post get api
         app.post('/topPicks', async (req, res) => {
@@ -77,6 +82,21 @@ async function run() {
             console.log(id);
             const query = { _id: new ObjectId(id) };
             const result = await moviesCollection.findOne(query)
+            console.log(result);
+            res.send(result)
+        })
+
+        // Updating movie data with PATCH
+        app.patch('/movies/:id', async (req, res) => {
+            const id = req.params.id;
+            console.log(id);
+            const data = req.body;
+            const query = {_id: new ObjectId(id)};
+            console.log(query);
+            const update = {
+                $set: data 
+            }
+            const result = await moviesCollection.updateOne(query, update)
             console.log(result);
             res.send(result)
         })
