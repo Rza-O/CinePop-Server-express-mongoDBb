@@ -95,6 +95,7 @@ async function run() {
             console.log(query);
             const update = {
                 $set: data 
+
             }
             const result = await moviesCollection.updateOne(query, update)
             console.log(result);
@@ -145,15 +146,6 @@ async function run() {
     }
 }
 run()
-
-
-
-
-
-
-
-
-
 
 
 app.get('/', (req, res) => {
