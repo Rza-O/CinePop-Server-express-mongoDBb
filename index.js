@@ -81,6 +81,16 @@ async function run() {
             res.send(result)
         })
 
+        // Deleting single movie from the server
+        app.delete('/movies/:id', async (req, res) => {
+            const id = req.params.id;
+            console.log(id);
+            const query = { _id: new ObjectId(id) };
+            const result = await moviesCollection.deleteOne(query);
+            console.log(result);
+            res.send(result);
+        })
+
         // This is the POST API for favorites
         app.post('/favorites', async (req, res) => {
             const data = req.body;
@@ -103,6 +113,8 @@ async function run() {
             const result = await favoritesCollection.deleteOne(query);
             res.send(result);
         })
+
+
 
 
 
