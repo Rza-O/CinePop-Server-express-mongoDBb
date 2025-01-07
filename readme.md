@@ -75,8 +75,8 @@ The CinePop server facilitates a seamless connection between the frontend and th
 ### Steps
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-repo/meal-sharing-backend.git
-   cd meal-sharing-backend
+   git clone https://github.com/your-repo/cinepop-server.git
+   cd cinepop-server
    ```
 2. Install dependencies:
    ```bash
@@ -98,7 +98,6 @@ The CinePop server facilitates a seamless connection between the frontend and th
 
 ## Dependencies
 
-- **[cookie-parser](https://www.npmjs.com/package/cookie-parser)**: Parse cookies for managing http-only JWTs.
 - **[cors](https://www.npmjs.com/package/cors)**: Enable cross-origin resource sharing.
 - **[dotenv](https://www.npmjs.com/package/dotenv)**: Manage environment variables securely.
 - **[express](https://www.npmjs.com/package/express)**: Web framework for Node.js.
