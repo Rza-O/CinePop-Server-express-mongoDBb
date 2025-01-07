@@ -40,7 +40,7 @@ async function run() {
             let result;
             let option = {};
             if (sortBy === 'rating') {
-                result = await moviesCollection.find().sort({ rating: -1 }).limit(6).toArray();
+                result = await moviesCollection.find().sort({ rating: -1 }).limit(8).toArray();
             }
             else if (search) {
                 option = {title: {$regex : search, $options: "i"}}
