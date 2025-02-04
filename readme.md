@@ -4,8 +4,8 @@ The server-side backend for **CinePop**, a modern movie portal for exploring, ma
 
 ## Live URL
 
-Live API: [https://cine-popcorn-server.vercel.app/]  
-Client-side app: [https://github.com/programming-hero-web-course2/b10-a10-client-side-Rza-O]
+Live API: [Live](https://cine-popcorn-server.vercel.app/)  
+Client-side app: [Client Repo](https://github.com/Rza-O/CinePop-Movie-Review-Portal--client)
 
 ---
 
